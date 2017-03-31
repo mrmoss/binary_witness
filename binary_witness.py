@@ -34,9 +34,10 @@ if __name__=='__main__':
 			exit(1)
 
 		screen=init_screen((600,600))
-		surface_size=[600,100]
+		surface_size=[1000,100]
 		surface=pygame.Surface(surface_size)
 		surface.fill((0,0,0))
+		pygame.display.set_caption('Binary Witness - '+sys.argv[1])
 
 		old_mod_time=0
 		last_y_start=None
@@ -170,7 +171,10 @@ if __name__=='__main__':
 
 						for yy in range(int(real_visible_y_start),int(real_visible_y_end)+1):
 							for xx in range(surface_size[0]):
-								surface.set_at((xx,yy),map_byte(mm,yy*surface_size[0]+xx))
+								ind=yy*surface_size[0]+xx
+								if ind>=len(mm):
+									break
+								surface.set_at((xx,yy),map_byte(mm,ind))
 
 					screen.blit(pygame.transform.rotozoom(surface,0,scale),real_off)
 					pygame.display.flip()
